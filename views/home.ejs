@@ -8,11 +8,18 @@
   </head>
   <body>
     <h1>Codeial | Home</h1>
+
+    <% if(locals.user){ %>
+    <p><%=locals.user.name%></p>
+    <div>
+      <a href="/users/sign-out">Sign Out</a>
+    </div>
+    <%}else{%>
     <button>
       <a href="/users/sign-in">Sign In</a>
     </button>
     <button>
-      <a href="/users/sign-up">Sign Up</a>
-    </button>
+      <a href="/users/sign-up">Sign Up</a></button
+    ><%}%>
   </body>
 </html>

@@ -1,31 +1,24 @@
 const User = require("../models/User.js");
 // Profile Page
 module.exports.profile = function (req, res) {
-  if (!req.cookies.user_id) return res.redirect("/users/sign-in");
-  User.findById(req.cookies.user_id)
-    .then(function (user) {
-      if (!user) {
-        console.log("Your Session is Expired , Please Login Again ");
-        return res.redirect("/users/sign-in");
-      }
-      return res.render("profile", {
-        title: "Profile Page",
-        User: user,
-      });
-    })
-    .catch(function (err) {
-      console.log("Error in profile", err);
-      return res.redirect("/users/sign-in");
-    });
+  return res.render("profile", {
+    title: "profile",
+  });
 };
 // Render The Sign Up Page
 module.exports.signUp = function (req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/profile");
+  }
   return res.render("user_sign_up", {
     title: "Sign Up",
   });
 };
 // Render The Sign In Page
 module.exports.signIn = function (req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/profile");
+  }
   return res.render("user_sign_in", {
     title: "Sign In",
   });
@@ -53,26 +46,21 @@ module.exports.create = function (req, res) {
     })
     .catch(function (err) {
       console.log("Error in finding User ", err);
+      return;
     });
 };
 
 // Sign In User
 module.exports.createSession = function (req, res) {
-  User.findOne({ email: req.body.email })
-    .then(function (user) {
-      if (!user) {
-        console("User Does Not exits ! Create User");
-        return res.redirect("/users/sign-up");
-      }
-      if (user.password != req.body.password) {
-        return res.redirect("back");
-      }
-      // Setting Up cookies
-      res.cookie("user_id", user._id);
-      return res.redirect("/users/profile");
-    })
-    .catch(function (err) {
-      console.log("User Does not exits or Error in sign in", err);
-      return res.redirect("back");
-    });
+  // TODO
+  return res.redirect("/users/profile");
+};
+
+module.exports.destroySession = function (req, res) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+  });
+  return res.redirect("/");
 };

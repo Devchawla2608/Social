@@ -1,31 +1,39 @@
-// app.set -> app has some properties and keys and when we put values it takes
+// Passport is a authentication Middleware
+// Something which is run before the request data reaches action
 
-// Cookie -> Cookie is a file stored by broswer and sent with every request to server and server sent same file to broswer
+// Now passpport has a lot of stratiges we will use these
+// 1.) Passport local
+// 2.) Passport jwt
+// 3.) Passport google auth
 
-// 1.) stores  User identity
-// cookei if a file whihc stores ke value pairs
-// broswer hav limited storageif heavy coockie then broswer clear that cookie
+// Now to use passport we have to install both passport and passport strategy
 
-// 1.) Stores the items stored in cart
-// 2.) Location
-// 3.) Identity
-// 4.) If we delete the cookie than identity will lost
-// 5.) If i send a get request and after then post reaquest then server will not know that requ comes from the same client
-// Cookie encryptted\
+// npm install passport
+// npm install passport-local
 
-// We have to tell to app to use it and we will tel in the middle ware  when request comes in
+// Passport local have some same thing as manual authentication
+// 1.) Passport js uses session cookie
+// session cookie stores all the seesion information
+// and it is encrypted whihc is far good as compare to  local authenication so no one can decrypt it
 
-// if(err) {console.log("Err or in server" , err)};
-// Interpolation
+// Expression Session Cookie makes the session cookie and encrypts the cookie not the passport so we have to install it
 
-// Set cookie from browser
-// cookie -> localhost:8000 -> application
-// user_id : 1
+//  ------------------------------- Middleware which takes session cookie and encrypts it-------------------------------
+// app.use(
+//   session({
+//     name: "Social",
+//     secret: "blah something",
+//     saveUninitialized: false,
+//     resave: false,
+//     cookie: {
+//       maxAge: 1000 * 60 * 100,
+//     },
+//   })
+// );
+//1.) Uninitialized -> If user is uninitialized(not logged in) then i do not want to any other data into the cookie
+// 2.) if loged in means cookie hass session data so if sessin data present we will not save same data again and again
 
-// module.exports.home = function (req, res) {
-//   console.log(req.cookies);
-//   res.cookie("user_id", 25);
-//   return res.render("home", {
-//     title: "Codeial",
-//   });
-// };
+// If we restart the server then thoses cookies will vanish 
+so we have to store these cookies permanently
+
+so we will use mongostore and mongo connect

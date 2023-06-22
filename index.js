@@ -1,26 +1,31 @@
 //  ------------------------------- Require Express -------------------------------
 const express = require("express");
 
-//  ------------------------------- Require cookieParser -------------------------------
-const cookieParser = require("cookie-parser");
-
 //  ------------------------------- Require Path -------------------------------
 const path = require("path");
 
 //  ------------------------------- Define Port -------------------------------
 const port = 8000;
 
-//  ------------------------------- Start Port -------------------------------
+//  ------------------------------- Start App -------------------------------
 const app = express();
 
 //  ------------------------------- Setting DB -------------------------------
 const db = require("./config/mongoose.js");
 
+//  ------------------------------- express - session (Session Cookie) -------------------------------
+const session = require("express-session");
+
+//  ------------------------------- Require Passport -------------------------------
+const passport = require("passport");
+
+//  ------------------------------- Require Passport Local Strategy-------------------------------
+const passportLocal = require("./config/Passport-local-strategy.js");
+
+const MongoStore = require("connect-mongo");
+
 //  ------------------------------- Parser Middleware (set data in req.body) -------------------------------
 app.use(express.urlencoded({ extended: true }));
-
-//  ------------------------------- CookieParser Middleware (Setting Up cookie) -------------------------------
-app.use(cookieParser());
 
 //  ------------------------------- Statics files (assets) -------------------------------
 app.use(express.static("./assets"));
@@ -28,6 +33,31 @@ app.use(express.static("./assets"));
 //  ------------------------------- View Engine (EJS) -------------------------------
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+//  ------------------------------- Middleware which takes session cookie and encrypts it-------------------------------
+app.use(
+  session({
+    name: "Social",
+    secret: "blah something",
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+      maxAge: 1000 * 60 * 100,
+    },
+    store: MongoStore.create({
+      mongoUrl: "mongodb://localhost/social_db",
+      dbName: "social_db",
+      autoRemove: "disabled",
+    }),
+  })
+);
+
+//  ------------------------------- Initialize Passport -------------------------------
+app.use(passport.initialize());
+app.use(passport.session());
+
+//  -------------------------------Middleware check whether session cookie is present or not -------------------------------
+app.use(passport.setAuthenticatedUser);
 
 //  ------------------------------- Router (EJS) -------------------------------
 app.use("/", require("./routes"));
