@@ -1,0 +1,31 @@
+// app.set -> app has some properties and keys and when we put values it takes
+
+// Cookie -> Cookie is a file stored by broswer and sent with every request to server and server sent same file to broswer
+
+// 1.) stores  User identity
+// cookei if a file whihc stores ke value pairs
+// broswer hav limited storageif heavy coockie then broswer clear that cookie
+
+// 1.) Stores the items stored in cart
+// 2.) Location
+// 3.) Identity
+// 4.) If we delete the cookie than identity will lost
+// 5.) If i send a get request and after then post reaquest then server will not know that requ comes from the same client
+// Cookie encryptted\
+
+// We have to tell to app to use it and we will tel in the middle ware  when request comes in
+
+// if(err) {console.log("Err or in server" , err)};
+// Interpolation
+
+// Set cookie from browser
+// cookie -> localhost:8000 -> application
+// user_id : 1
+
+// module.exports.home = function (req, res) {
+//   console.log(req.cookies);
+//   res.cookie("user_id", 25);
+//   return res.render("home", {
+//     title: "Codeial",
+//   });
+// };
