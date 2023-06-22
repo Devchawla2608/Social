@@ -22,4 +22,4 @@ const userSchema = new mongoose.Schema(
 const User = mongoose.model("User", userSchema);
 module.exports = User;
 
-// User in mongoose.model will be the name of user schema in database
+// User in mongoose.model will be the name of user schema in database mongodb
