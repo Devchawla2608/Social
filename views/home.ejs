@@ -4,22 +4,94 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%=title%></title>
-    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="/css/index.css" />
   </head>
   <body>
-    <h1>Codeial | Home</h1>
-
-    <% if(locals.user){ %>
-    <p><%=locals.user.name%></p>
-    <div>
-      <a href="/users/sign-out">Sign Out</a>
+    <div class="home_header">
+      <h1>Codeial | Home</h1>
+      <% if(locals.user){ %>
+      <p><%=locals.user.name%></p>
+      <div>
+        <a href="/users/sign-out">Sign Out</a>
+      </div>
+      <%}else{%>
+      <button>
+        <a href="/users/sign-in">Sign In</a>
+      </button>
+      <button>
+        <a href="/users/sign-up">Sign Up</a></button
+      ><%}%>
     </div>
-    <%}else{%>
-    <button>
-      <a href="/users/sign-in">Sign In</a>
-    </button>
-    <button>
-      <a href="/users/sign-up">Sign Up</a></button
-    ><%}%>
+    <% if(locals.user) {%>      <section class="post_container"> 
+<% for(var i=0; i<posts.length; i++) {%>
+
+
+
+
+
+
+<div class="post">
+<h1 class="post_content"><%=posts[i].content%></h1>
+<h2 class="post_user"><%=posts[i].user.name%></h2>
+
+<% if(locals.user) {%>
+      <form action="/comments/create" method="post">
+        <textarea
+          name="content"
+          id=""
+          cols="30"
+          rows="3"
+          placeholder="Type Comment Here..."
+        ></textarea>
+        <input type="hidden" value="<%=posts[i]._id%>" name="post" />
+        <input type="submit" value="Comment"/>
+      </form>
+<%}%>
+
+
+
+<div class="post_comments_list">
+
+<ul id="post_comments">
+<% for(comment of posts[i].comments){ %>
+<p>
+<%= comment.content%>
+<br>
+<small>
+<%= comment.user.name%>
+</small>
+</p>
+
+<% } %>
+</ul>
+
+</div> 
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% } %>
+      </section> <%}%>
   </body>
 </html>

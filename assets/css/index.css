@@ -1,0 +1,35 @@
+body {
+  border: 2px solid green;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+.home_header {
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.post_container {
+  border: 2px solid red;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.post {
+  border: 2px solid black;
+  width: 300px;
+  height: 300px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+.post_content {
+  color: red;
+}

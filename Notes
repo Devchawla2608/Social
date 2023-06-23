@@ -37,3 +37,8 @@
 so we have to store these cookies permanently
 
 so we will use mongostore and mongo connect
+
+
+PrePopulate -> Prepopulating the refered object 
+example -> When i am showing all the post 
+then i want to show user name aas well but we have only user id so if we want to show user name as well then we have to pre populate user  
