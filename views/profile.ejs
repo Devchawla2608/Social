@@ -11,5 +11,19 @@
     <div><a href="/users/sign-out">Sign Out</a></div>
     <p><%=locals.user.email%></p>
     <p><%=locals.user.name%></p>
+
+    <section id="feed_posts">
+      <h4>Posts</h4>
+      <form action="/posts/create" method="post">
+        <textarea
+          name="content"
+          id=""
+          cols="30"
+          rows="3"
+          placeholder="Type Here..."
+        ></textarea>
+        <input type="submit" values="Post" />
+      </form>
+    </section>
   </body>
 </html>
