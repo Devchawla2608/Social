@@ -1,29 +1,56 @@
 const User = require("../models/User.js");
-// Profile Page
+ 
+//  ------------------------------- Profile Page  -------------------------------
 module.exports.profile = function (req, res) {
-  return res.render("profile", {
-    title: "profile",
-  });
+  User.findById(req.params.id).
+  then((user)=>{
+    return res.render("profile", {
+      title: "profile",
+      profile_user:user
+    });
+  }).catch((err)=>{
+    console.log("Error" , err);
+    return res.redirect('back');
+  })
 };
-// Render The Sign Up Page
+
+//  ------------------------------- Update  -------------------------------
+
+module.exports.update = function(req , res){
+    if(req.params.id == req.user.id){
+        User.findByIdAndUpdate(req.params.id , req.body)
+        .then(()=>{
+            return res.redirect('back')
+        }).catch((err)=>{
+            console.log("User Does Not exits" , err);
+            return res.status(401).send('Unauthorized');
+        })
+    }   
+}
+
+ 
+//  -------------------------------Render The Sign Up Page  -------------------------------
 module.exports.signUp = function (req, res) {
   if (req.isAuthenticated()) {
-    return res.redirect("/users/profile");
+    return res.redirect("/");
   }
   return res.render("user_sign_up", {
     title: "Sign Up",
   });
 };
-// Render The Sign In Page
+
+//  -------------------------------Render The Sign In Page  -------------------------------
 module.exports.signIn = function (req, res) {
   if (req.isAuthenticated()) {
-    return res.redirect("/users/profile");
+    return res.redirect("/");
   }
   return res.render("user_sign_in", {
     title: "Sign In",
   });
 };
-// Sign Up User
+
+
+//  -------------------------------  Sign Up User  -------------------------------
 module.exports.create = function (req, res) {
   if (req.body.password !== req.body.confirmPassword) {
     return res.redirect("back");
@@ -50,10 +77,11 @@ module.exports.create = function (req, res) {
     });
 };
 
-// Sign In User
+
+//  -------------------------------  Sign In User  -------------------------------
 module.exports.createSession = function (req, res) {
   // TODO
-  return res.redirect("/users/profile");
+  return res.redirect("/");
 };
 
 module.exports.destroySession = function (req, res) {

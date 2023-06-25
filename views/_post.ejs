@@ -1,0 +1,49 @@
+<% for(var i=0; i<posts.length; i++) {%>
+<div class="post">
+    <!-- Post's Data -->
+    <h1 class="post_content"><%=posts[i].content%></h1>
+    <h2 class="post_user"><%=posts[i].user.name%></h2>
+
+
+    <!-- Post's Delete Button -->
+    <% if((locals.user )&& (locals.user.id == posts[i].user.id)) {%>
+        <small>
+            <a href="/posts/destroy/<%=posts[i].id%>">X</a>
+        </small>
+    <%}%>
+
+    <!-- Comment Form  -->
+    <% if(locals.user) {%>
+          <form action="/comments/create" method="post">
+            <textarea
+              name="content"
+              id=""
+              cols="30"
+              rows="3"
+              placeholder="Type Comment Here..."
+            ></textarea>
+            <input type="hidden" value="<%=posts[i]._id%>" name="post" />
+            <input type="submit" value="Comment"/>
+          </form>
+    <%}%>   
+
+    <!-- Post's Comments List  -->
+    <div class="post_comments_list">
+        <ul id="post_comments">
+            <% for(comment of posts[i].comments){ %>
+                <p>
+                    <%= comment.content%>
+                    <br>
+                    <small> <%= comment.user.name%></small>
+                </p>
+    
+                <% if(locals.user.id == comment.user.id ){ %>
+                    <small>
+                        <a href="/comments/destroy/<%=comment._id%>">X</a>
+                    </small>
+                <% } %>
+            <% } %>
+        </ul>
+    </div> 
+</div>
+<%}%>

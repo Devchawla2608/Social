@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%=title%></title>
     <link rel="stylesheet" href="/css/home.css" />
-  </head>
-  <body>
-    <h1>Profile Page</h1>
-    <div><a href="/users/sign-out">Sign Out</a></div>
-    <p><%=locals.user.email%></p>
-    <p><%=locals.user.name%></p>
+</head>
+<body>
+    <!-- Profile Page Header -->
+    <div class="profile_header">
+        <h1>Profile Page</h1> 
+        <div><a href="/users/sign-out">Sign Out</a></div>
+        <div><a href="/">Home</a></div>
+        <p><%=profile_user.email%></p>
+        <p><%=profile_user.name%></p>
+    </div>
 
-    <section id="feed_posts">
+    <!-- Post Form is user logged in  -->
+
+    <%if(locals.user.id == profile_user.id){ %>
+        <section id="feed_posts">
       <h4>Posts</h4>
       <form action="/posts/create" method="post">
         <textarea
@@ -24,6 +31,16 @@
         ></textarea>
         <input type="submit" values="Post" />
       </form>
-    </section>
+        </section>
+    <%}%>
+
+    <!-- Update Profile Form if user logged in  -->
+    <% if(locals.user.id == profile_user.id){ %>
+        <form action="/users/update/<%=locals.user.id%>" method="post">
+            <input type="text" name="name" placeholder="Your Name" value="<%=profile_user.name%>" required>
+            <input type="text" name="email" placeholder="Your Email" value="<%=profile_user.email%>" required>
+            <input type="submit" value="Update">
+        </form>
+    <%}%>
   </body>
 </html>

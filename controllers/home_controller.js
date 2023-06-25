@@ -1,5 +1,6 @@
 const Post = require("../models/Post.js");
-// Single Population
+const User = require('../models/User.js')
+//  ------------------------------- Single Population (User Populating)  -------------------------------
 
 // module.exports.home = function (req, res) {
 //   // Populate user in every post to showing auther (Read Notes)
@@ -19,7 +20,7 @@ const Post = require("../models/Post.js");
 //     });
 // };
 
-// Nested Population
+//  ------------------------------- Nested Population (User + Comments Populating)  -------------------------------
 module.exports.home = function (req, res) {
   // Populate user in every post to showing auther (Read Notes)
   Post.find({})
@@ -32,11 +33,18 @@ module.exports.home = function (req, res) {
     })
     .exec()
     .then((posts) => {
-      console.log("Posts Found");
-      return res.render("home", {
-        title: "Home",
-        posts: posts,
-      });
+      User.find({})
+      .then((users)=>{
+        return res.render("home", {
+            title: "Home",
+            posts: posts,
+            all_users:users,
+          });
+      })
+      .catch((err)=>{
+        console.log("Error in Fiding users", err);
+        return res.redirect('back')
+      })
     })
     .catch((err) => {
       console.log("Error", err);

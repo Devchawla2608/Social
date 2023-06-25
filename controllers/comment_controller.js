@@ -1,5 +1,8 @@
 const Comment = require("../models/Comment.js");
 const Post = require("../models/Post.js");
+
+//  ------------------------------- Create Comment  -------------------------------
+
 module.exports.create = function (req, res) {
   Post.findById(req.body.post)
     .then((post) => {
@@ -24,3 +27,25 @@ module.exports.create = function (req, res) {
       return;
     });
 };
+
+//  ------------------------------- Destroy Comment  -------------------------------
+module.exports.destroy = function(req , res){
+    Comment.findById(req.params.id)
+    .then((comment)=>{
+        if(req.user.id == comment.user){
+            Post.findById(comment.post)
+            .then((post)=>{
+                delete post.comments[post.comments.indexOf(comment.id)];
+                comment.deleteOne();
+                return res.redirect('back')
+            }).catch((err)=>{
+                console.log("Post is not exits " , err);
+                return res.redirect('back')
+            })
+        }
+    })
+    .catch((err)=>{
+        console.log("Comment Not present " , err);
+        return res.redirect('back')
+    })
+}
