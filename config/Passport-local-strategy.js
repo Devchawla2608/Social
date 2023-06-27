@@ -3,7 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/User.js");
 
 //  ------------------------------- Signing (Authentication using passport) -------------------------------
-//  ------------------------------- Tell passport to use local strategy -------------------------------
+//  ------------------------------- Tell passport to use local Strategy -------------------------------
 passport.use(
   new LocalStrategy(
     {
