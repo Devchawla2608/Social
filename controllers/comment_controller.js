@@ -12,40 +12,40 @@ module.exports.create = function (req, res) {
         post: req.body.post,
       })
         .then((comment) => {
-          console.log("Comment Created", comment);
+          req.flash("success" , "Comment  Created");
+          console.log("Comment Created");
           post.comments.push(comment);
           post.save();
           return res.redirect("back");
         })
         .catch((err) => {
+          req.flash("error" , "Comment not Created");
           console.log("Error in creating Commet", err);
           return;
         });
     })
     .catch((err) => {
+      req.flash("error" , "Comment not Created");
       console.log("Post Does Not Exits", err);
       return;
     });
 };
 
 //  ------------------------------- Destroy Comment  -------------------------------
-module.exports.destroy = function(req , res){
-    Comment.findById(req.params.id)
-    .then((comment)=>{
+module.exports.destroy = async function(req , res){
+    try{
+        let comment = await Comment.findById(req.params.id)
         if(req.user.id == comment.user){
-            Post.findById(comment.post)
-            .then((post)=>{
-                delete post.comments[post.comments.indexOf(comment.id)];
-                comment.deleteOne();
-                return res.redirect('back')
-            }).catch((err)=>{
-                console.log("Post is not exits " , err);
-                return res.redirect('back')
-            })
+            let post = await Post.findByIdAndUpdate(comment.post , {$pull : {comment:req.params.id}}) 
+            comment.deleteOne();
+            req.flash("success" , "Comment Deleted");
+            return res.redirect('back')
         }
-    })
-    .catch((err)=>{
-        console.log("Comment Not present " , err);
+        req.flash("error" , "Comment not Deleted");
         return res.redirect('back')
-    })
+    }catch(err){
+        req.flash("error" , "Comment not Deleted");
+        return res.redirect('back')
+    }
+
 }

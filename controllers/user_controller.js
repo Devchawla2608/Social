@@ -63,7 +63,7 @@ module.exports.create = function (req, res) {
       }
       User.create(req.body)
         .then(function (newUser) {
-          console.log("New User Created ", newUser);
+          req.flash('success' , "Signed up  Successfully")
           return res.redirect("/users/sign-in");
         })
         .catch(function (err) {
@@ -72,7 +72,7 @@ module.exports.create = function (req, res) {
         });
     })
     .catch(function (err) {
-      console.log("Error in finding User ", err);
+      req.flash('error' , "Error in signing up")
       return;
     });
 };
@@ -81,10 +81,12 @@ module.exports.create = function (req, res) {
 //  -------------------------------  Sign In User  -------------------------------
 module.exports.createSession = function (req, res) {
   // TODO
+  req.flash('success' , "Logged in Successfully")
   return res.redirect("/");
 };
 
 module.exports.destroySession = function (req, res) {
+  req.flash('success' , "Logged out Successfully")
   req.logout(function (err) {
     if (err) {
       return next(err);

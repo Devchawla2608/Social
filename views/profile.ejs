@@ -4,17 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%=title%></title>
-    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css
+    ">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js
+    <link rel="stylesheet" href="/css/index.css" />
 </head>
 <body>
     <!-- Profile Page Header -->
-    <div class="profile_header">
-        <h1>Profile Page</h1> 
-        <div><a href="/users/sign-out">Sign Out</a></div>
-        <div><a href="/">Home</a></div>
-        <p><%=profile_user.email%></p>
-        <p><%=profile_user.name%></p>
-    </div>
+    <%-include('_header') -%>
 
     <!-- Post Form is user logged in  -->
 
@@ -42,5 +39,25 @@
             <input type="submit" value="Update">
         </form>
     <%}%>
+    <script>
+      <%if(flash.success && flash.success.length>0){%>  
+    new Noty({
+      theme: 'relax',
+      text: "<%=flash.success%>",
+      type: 'success',
+      layout: 'topRight',
+      timeout: 1500
+    }).show();
+      <%}%>
+      <%if(flash.error && flash.success.error>0){%>  
+    new Noty({
+      theme: 'relax',
+      text: "<%=flash.error%>",
+      type: 'error',
+      layout: 'topRight',
+      timeout: 1500
+    }).show();
+      <%}%>
+  </script>
   </body>
 </html>

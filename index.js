@@ -22,7 +22,14 @@ const passport = require("passport");
 //  ------------------------------- Require Passport Local Strategy-------------------------------
 const passportLocal = require("./config/Passport-local-strategy.js");
 
+//  ------------------------------- Mongo Store -------------------------------
 const MongoStore = require("connect-mongo");
+
+//  ------------------------------- Setting Up Flash-------------------------------
+const flash = require("connect-flash");
+
+//  ------------------------------- Coustom flash middleware-------------------------------
+const customMware = require("./config/middleware.js");
 
 //  ------------------------------- Parser Middleware (set data in req.body) -------------------------------
 app.use(express.urlencoded({ extended: true }));
@@ -58,6 +65,10 @@ app.use(passport.session());
 
 //  -------------------------------Middleware check whether session cookie is present or not -------------------------------
 app.use(passport.setAuthenticatedUser);
+
+//  ------------------------------- Use Flash -------------------------------
+app.use(flash());
+app.use(customMware.setFlash);
 
 //  ------------------------------- Router (EJS) -------------------------------
 app.use("/", require("./routes"));

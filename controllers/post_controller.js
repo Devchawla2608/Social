@@ -8,33 +8,29 @@ module.exports.create = function (req, res) {
     user: req.user._id,
   })
     .then((post) => {
-      console.log("Post Created");
+      req.flash("success" , "Post  Created");
       return res.redirect("/");
     })
     .catch((err) => {
-      console.log("Error in creating post", err);
+      req.flash("error" , "Post  not Created");
       return;
     });
   };
 
 //  ------------------------------- Nested Population (User + Comments Populating)  -------------------------------
 
-module.exports.destroy = function (req, res) {
-  Post.findById(req.params.id)
-    .then((post) => {
-      // When i compare to id then we have to convert the object id into string so that's why we did not used _id
-      console.log(post.user)
-      if (post.user == req.user.id) {
-        post.deleteOne();
-        Comment.deleteMany({post:req.params.id}).then(()=>{
+module.exports.destroy = async function (req, res) {
+    try{
+        let post = await Post.findById(req.params.id)
+        if (post.user == req.user.id) {
+            post.deleteOne();
+            await Comment.deleteMany({post:req.params.id})
+            req.flash("success" , "Post  deleted");
             return res.redirect('back')
-        }).catch(()=>{
-            return res.redirect('back')
-        })
-      }
-    })
-    .catch((err) => {
-        console.log("There is an error " , err);
+        }
+    }
+    catch(err){
+        req.flash("error" , "Post  not deleted");
         return res.redirect('back')
-    })
+    }
 }

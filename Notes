@@ -1,44 +1,13 @@
-// Passport is a authentication Middleware
-// Something which is run before the request data reaches action
+Flash Message stored in cookies and cleared when we referesh 
+connect - flash
 
-// Now passpport has a lot of stratiges we will use these
-// 1.) Passport local
-// 2.) Passport jwt
-// 3.) Passport google auth
+To send with response we will create our own coustom middleware
 
-// Now to use passport we have to install both passport and passport strategy
+Steps
+1.) Set up library 
+2.) app.use(flash())
+3.) set up messages 
+4.) to set in res we created a custom middleware 
+5.) We fetched data from req  and put into locals
 
-// npm install passport
-// npm install passport-local
-
-// Passport local have some same thing as manual authentication
-// 1.) Passport js uses session cookie
-// session cookie stores all the seesion information
-// and it is encrypted whihc is far good as compare to  local authenication so no one can decrypt it
-
-// Expression Session Cookie makes the session cookie and encrypts the cookie not the passport so we have to install it
-
-//  ------------------------------- Middleware which takes session cookie and encrypts it-------------------------------
-// app.use(
-//   session({
-//     name: "Social",
-//     secret: "blah something",
-//     saveUninitialized: false,
-//     resave: false,
-//     cookie: {
-//       maxAge: 1000 * 60 * 100,
-//     },
-//   })
-// );
-//1.) Uninitialized -> If user is uninitialized(not logged in) then i do not want to any other data into the cookie
-// 2.) if loged in means cookie hass session data so if sessin data present we will not save same data again and again
-
-// If we restart the server then thoses cookies will vanish 
-so we have to store these cookies permanently
-
-so we will use mongostore and mongo connect
-
-
-PrePopulate -> Prepopulating the refered object 
-example -> When i am showing all the post 
-then i want to show user name aas well but we have only user id so if we want to show user name as well then we have to pre populate user  
+We will use noty js

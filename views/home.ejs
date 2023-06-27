@@ -4,29 +4,15 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title><%=title%></title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css
+        ">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js
+        "></script>
         <link rel="stylesheet" href="/css/index.css" />
     </head>
     <body>
-      <!-- Home Page Header -->
-        <div class="home_header">
-      <h1>Codeial | Home</h1>
-      <% if(locals.user){ %>
-      <p><%=locals.user.name%></p>
-      <div>
-        <a href="/users/sign-out">Sign Out</a>
-      </div>
-      <div>
-        <a href="/users/profile/<%=locals.user.id%>">Profile</a>
-      </div>
-      <%}else{%>
-      <button>
-        <a href="/users/sign-in">Sign In</a>
-      </button>
-      <button>
-        <a href="/users/sign-up">Sign Up</a></button
-      ><%}%>
-        </div>
 
+      <%-include('_header') -%>
         <!-- Post Container (Partials) -->
         <% if(locals.user) {%>     
             <section class="post_container"> 
@@ -45,6 +31,26 @@
             <%}%>
           </section>
         <%}%>
+        <script>
+            <%if(flash.success && flash.success.length>0){%>  
+          new Noty({
+            theme: 'relax',
+            text: "<%=flash.success%>",
+            type: 'success',
+            layout: 'topRight',
+            timeout: 1500
+          }).show();
+            <%}%>
+            <%if(flash.error && flash.success.error>0){%>  
+          new Noty({
+            theme: 'relax',
+            text: "<%=flash.error%>",
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+          }).show();
+            <%}%>
+        </script>
     </body>
 </html>
 
