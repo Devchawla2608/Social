@@ -1,0 +1,5 @@
+{
+    let createPost = function(){
+        
+    }
+}

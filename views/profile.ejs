@@ -6,7 +6,7 @@
     <title><%=title%></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css
     ">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <link rel="stylesheet" href="/css/index.css" />
 </head>
 <body>
@@ -29,13 +29,15 @@
         <input type="submit" values="Post" />
       </form>
         </section>
+    
     <%}%>
-
+    <img src="<%=user.avatar%>" alt="<%=user.name%>" width="100">
     <!-- Update Profile Form if user logged in  -->
     <% if(locals.user.id == profile_user.id){ %>
-        <form action="/users/update/<%=locals.user.id%>" method="post">
+        <form action="/users/update/<%=locals.user.id%>" method="post" enctype="multipart/form-data">
             <input type="text" name="name" placeholder="Your Name" value="<%=profile_user.name%>" required>
             <input type="text" name="email" placeholder="Your Email" value="<%=profile_user.email%>" required>
+            <input type="file" name="avatar" placeholder="Profile Picture">
             <input type="submit" value="Update">
         </form>
     <%}%>
@@ -59,5 +61,6 @@
     }).show();
       <%}%>
   </script>
+  <script src=""></script>
   </body>
 </html>

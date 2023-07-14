@@ -37,6 +37,9 @@ app.use(express.urlencoded({ extended: true }));
 //  ------------------------------- Statics files (assets) -------------------------------
 app.use(express.static("./assets"));
 
+//  -------------------------------Make the uploades path avaiable to server -------------------------------
+app.use('/uploads' , express.static(__dirname + '/uploads'));
+
 //  ------------------------------- View Engine (EJS) -------------------------------
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -72,6 +75,7 @@ app.use(customMware.setFlash);
 
 //  ------------------------------- Router (EJS) -------------------------------
 app.use("/", require("./routes"));
+
 
 //  ------------------------------- Listen Port -------------------------------
 app.listen(port, function (err) {
