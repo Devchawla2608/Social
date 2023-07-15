@@ -22,6 +22,9 @@ const passport = require("passport");
 //  ------------------------------- Require Passport Local Strategy-------------------------------
 const passportLocal = require("./config/Passport-local-strategy.js");
 
+//  ------------------------------- Require Passport local strategy-------------------------------
+const passportJWT = require('./config/Passport-local-strategy.js')
+
 //  ------------------------------- Mongo Store -------------------------------
 const MongoStore = require("connect-mongo");
 

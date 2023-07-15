@@ -1,11 +1,15 @@
- We will use multer to upload data
- the whole will not be present in the data base only the path will be in database whole file present in the local folder or cloud 
- 2.) We will store some other info as well
- 3.) Multipart data -> encrypt in form 
+In jwt We need not to store anything into database 
+Which is the best part 
+One token generated 
+__H__ . __Pay__ . __Sign__
+Sign -> combination of header and signature
+Header Algo to encrypt the data
+payload -> main content like expire and all other things
 
- enctype="multipart/form-data"
- Steps 
- 1.) install multer
- 2.) changes view user profile and put encrypt = multipart/form-data
- 3.) changed the user model to put address of images to schema  
- 
+Have to install jwt strategy 
+1) npm install passport-jwt
+
+
+
+Brearer has jwt 
+npm install jsonwebtoken
